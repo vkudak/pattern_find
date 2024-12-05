@@ -3,6 +3,8 @@ import numpy as np
 import matrixprofile as mp
 from datetime import datetime
 
+# Need python 3.9 !!!!!!!!!!!!!!!!!!
+
 
 def read_lc(lc_filename):
     date_time = []
@@ -21,3 +23,23 @@ def read_lc(lc_filename):
 
 
 # https://matrixprofile.docs.matrixprofile.org/index.html
+
+
+dataset = mp.datasets.load('motifs-discords-small')
+ts = dataset['data']
+
+date_time, mag = read_lc("result_22076_20240730_UT212240.phV")
+# date_time = [x.timestamp() for x in date_time]
+# d = {'time': date_time, 'mag': mag * -1}
+# ts = pd.DataFrame(data=mag*-1)
+ts = mag
+
+# plt.figure(figsize=(18, 5))
+# plt.plot(np.arange(len(ts)), ts)
+# plt.title('Synthetic Time Series')
+# plt.show()
+
+
+profile, figures = mp.analyze(ts, windows=70, n_jobs=5, threshold=0.75)
+
+plt.show()
